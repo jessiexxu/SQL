@@ -20,6 +20,10 @@ select abs(rating_ls_1980-rating_gt_1980) as rating_diff
 ```
 # Q2. Find the names of all reviewers who rated Gone with the Wind.
 
+for i in range(5):
+  initial+1
+print initial
+
 
 
 
