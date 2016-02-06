@@ -5,7 +5,7 @@
 # Q1. Find the difference between the average rating of movies released 
 # before 1980 and the average rating of movies released after 1980.
 
-```sql
+```
 select abs(rating_ls_1980-rating_gt_1980) as rating_diff
   from (select avg(mv_rating) as rating_ls_1980
           from movie m
