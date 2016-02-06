@@ -19,7 +19,10 @@ select abs(rating_ls_1980-rating_gt_1980) as rating_diff
           where year>1980);
 ```
 # Q2. Find the names of all reviewers who rated Gone with the Wind.
-
+SELECT
+ SUM(CASE WHEN action = 'click' THEN 1 ELSE 0 END) / 
+ SUM(CASE WHEN action = 'view' THEN 1 ELSE 0 END) AS CTR
+FROM dialogue;
 
 
 
