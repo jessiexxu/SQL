@@ -1,7 +1,7 @@
 # SQL
 Querying and managing data
 
-```
+```sql
 select abs(rating_ls_1980-rating_gt_1980) as rating_diff
   from (select avg(mv_rating) as rating_ls_1980
           from movie m
