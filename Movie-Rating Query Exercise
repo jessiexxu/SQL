@@ -22,7 +22,3 @@ select abs(rating_ls_1980-rating_gt_1980) as rating_diff
 
 
 
-#' RPostgres::Postgres()
-Postgres <- function() {
-  new("PqDriver")
-}
