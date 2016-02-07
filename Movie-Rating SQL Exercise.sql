@@ -66,4 +66,93 @@ select distinct rv1.name, rv2.name
 where rv1.name < rv2.name
 order by rv1.name, rv2.name;
 
+-- Q7. For each rating that is the lowest (fewest stars) currently in the database,
+-- return the reviewer name, movie title, and number of stars.
 
+select name, title, stars
+  from reviewer rv
+  join rating rt on rv.rID = rt.rID
+  join movie m on rt.mID = m.mID
+where stars = (select min(stars) from rating);
+
+-- Q8. List movie titles and average ratings, from highest-rated to lowest-rated. 
+-- If two or more movies have the same average rating, list them in alphabetical order.
+
+select title, avg(stars) as avg_stars
+  from rating rt
+  join movie m on rt.mID = m.mID
+group by title
+order by 2 desc, title;
+
+-- Q9. Find the names of all reviewers who have contributed three or more ratings.
+
+select distinct name
+  from reviewer rv
+  join rating rt on rv.rID = rt.rID
+where rv.rID in 
+     (select rID from rating
+      group by rID
+      having count(mID)>2);
+
+-- Q10. Some directors directed more than one movie. For all such directors, 
+-- return the titles of all movies directed by them, along with the director name. 
+-- Sort by director name, then movie title.
+
+select title, director
+  from movie
+where director in 
+    (select director from movie 
+     group by director 
+     having count(mID)>1)
+order by director, title;
+
+-- Q11. Find the movie(s) with the highest average rating. Return the movie title(s) and average rating. 
+
+select * 
+  from (select title, avg(stars) as avg_stars
+          from rating rt
+          join movie m on rt.mID = m.mID
+        group by title
+        order by 2 desc, title)
+limit 1;
+
+-- Q12. Find the movie(s) with the highest average rating. Return the movie title(s) and average rating.
+
+select title, avg(stars) as avg_stars
+  from rating rt
+  join movie m on rt.mID = m.mID
+group by title
+having avg_stars >= 
+    (select avg(stars) from rating 
+     group by mID 
+     order by 1 desc);
+
+-- Q13. Find the movie(s) with the lowest average rating. Return the movie title(s) and average rating.
+
+select title, avg(stars) as avg_stars
+  from rating rt
+  join movie m on rt.mID = m.mID
+group by title
+having avg_stars <= 
+    (select avg(stars) from rating 
+     group by mID 
+     order by 1);
+
+-- Q14. For each director, return the director's name together with the title(s) of the movie(s) 
+-- they directed that received the highest rating among all of their movies, and the value of that rating. 
+-- Ignore movies whose director is NULL. 
+
+select director, title, max(stars)
+  from movie m
+  join rating rt on m.mID = rt.mID
+where director is not null
+group by director;
+
+-- Q15. Randomly select 3 movies with stars>3.
+
+select title, stars
+  from rating rt
+  join movie m on rt.mID = m.mID
+where stars > 3
+order by random()
+limit 3;
