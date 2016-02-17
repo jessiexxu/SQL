@@ -62,3 +62,21 @@ where id not in
        join highschooler h2 on h2.id = id2
      where h1.grade != h2.grade)
      order by grade, name;
+
+-- Q7. For each student A who likes a student B where the two are not friends, 
+-- find if they have a friend C in common (who can introduce them!). For all such trios, 
+-- return the name and grade of A, B, and C.
+
+select h1.name as student_A, h1.grade as A_grade, h2.name as student_B, h2.grade as B_grade,
+h3.name as student_C, h3.grade as C_grade
+  from likes l
+  join friend f1 on l.id1 = f1.id1
+  join friend f2 on l.id2 = f2.id2
+  join highschooler h1 on l.id1 = h1.id
+  join highschooler h2 on l.id2 = h2.id
+  join highschooler h3 on f1.id2 = h3.id
+where l.id1 not in 
+    (select l.id1 as student_A
+       from likes l
+       join friend f on l.id1 = f.id1
+     where l.id2 = f.id2) and f1.id2 = f2.id1;
