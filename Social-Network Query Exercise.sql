@@ -80,3 +80,18 @@ where l.id1 not in
        from likes l
        join friend f on l.id1 = f.id1
      where l.id2 = f.id2) and f1.id2 = f2.id1;
+
+-- Q8. Find the difference between the number of students in the school and the number of different first names. 
+
+select count(*)-count(distinct name)
+  from highschooler;
+
+-- Q9. Find the name and grade of all students who are liked by more than one other student.
+
+select name, grade
+  from highschooler
+where id in 
+    (select id2
+       from likes
+     group by id2
+     having count(id2) > 1);
