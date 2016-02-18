@@ -91,7 +91,6 @@ select count(*)-count(distinct name)
 select name, grade
   from highschooler
 where id in 
-    (select id2
-       from likes
+    (select id2 from likes
      group by id2
      having count(id2) > 1);
