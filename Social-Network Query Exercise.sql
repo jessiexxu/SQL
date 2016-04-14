@@ -94,3 +94,11 @@ where id in
     (select id2 from likes
      group by id2
      having count(id2) > 1);
+
+-- Q10. What is the average number of friends per student?
+
+select avg(fd_cnt)
+from 
+(select count(ID2) as fd_cnt
+from Friend
+group by ID1);
