@@ -102,3 +102,11 @@ from
 (select count(ID2) as fd_cnt
 from Friend
 group by ID1);
+
+-- Q11. Find the number of students who are either friends with Cassandra or are friends of friends of Cassandra.
+
+select count(ID1)
+from Friend
+where ID2 in 
+    (select ID2 from Friend
+     where ID1 = (select ID from Highschooler where name="Cassandra"));
