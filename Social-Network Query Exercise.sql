@@ -110,3 +110,16 @@ from Friend
 where ID2 in 
     (select ID2 from Friend
      where ID1 = (select ID from Highschooler where name="Cassandra"));
+
+-- Q12. Find the name and grade of the student(s) with the greatest number of friends. 
+
+select name, grade
+from highschooler h
+join
+(select * from
+    (select id1, count(id2) as frd_cnt
+    from friend
+    group by id1
+    order by frd_cnt desc)
+limit 2) as max_frd_cnt -- ***need to check the friend count table first to see how many ids have the largest number of friends.
+on h.id=max_frd_cnt.id1;
