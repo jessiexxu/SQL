@@ -170,3 +170,12 @@ from movie
 cross join reviewer
 where reviewer.name='James Cameron';
 
+-- Q18. For all movies that have an average rating of 4 stars or higher, add 25 to the release year.
+
+Update movie
+set year=year+25
+where mID in
+    (select mID
+    from rating
+    group by mID
+    having avg(stars)>=4);
