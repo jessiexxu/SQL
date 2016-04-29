@@ -156,3 +156,17 @@ select title, stars
 where stars > 3
 order by random()
 limit 3;
+
+-- Q16. Add the reviewer Roger Ebert to your database, with an rID of 209. 
+
+Insert into reviewer (rID, name)
+values (209, 'Roger Ebert');
+
+-- Q17. Insert 5-star ratings by James Cameron for all movies in the database. Leave the review date as NULL. 
+
+Insert into rating (rID, mID,stars)
+select reviewer.rID, movie.mID, 5
+from movie
+cross join reviewer
+where reviewer.name='James Cameron';
+
