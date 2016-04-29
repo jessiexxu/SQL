@@ -179,3 +179,9 @@ where mID in
     from rating
     group by mID
     having avg(stars)>=4);
+
+-- Q19. Remove all ratings where the movie's year is before 1970 or after 2000, and the rating is fewer than 4 stars.
+
+Delete from rating
+where mID in (select mID from movie where year<1970 or year>2000)
+and stars<4;
